@@ -1,0 +1,50 @@
+body {
+    background: #ababab;
+}
+
+h1 {
+    font-size: 20px;
+    color: #00ab00;    
+}
+
+h2 {
+    font-size: 16px;
+}
+
+li {
+    margin: 20px;
+}
+
+ol, ul {
+    padding: 10px;
+}
+
+.content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 10px;
+}
+
+.content-left {
+    padding: 20px;
+    border: 1px solid black;
+    width: 70%;
+    background: #4088e7;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+.content-right {
+    padding: 20px;
+    border: 1px solid white;
+    width: 20%;
+    background: #b6cbe7;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+.cat {
+    width: 300px; 
+    height: 300px;
+}
