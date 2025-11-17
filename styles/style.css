@@ -4,7 +4,7 @@ body {
 
 h1 {
     font-size: 20px;
-    color: #00ab00;    
+    color: #00ab00;
 }
 
 h2 {
@@ -15,7 +15,8 @@ li {
     margin: 20px;
 }
 
-ol, ul {
+ol,
+ul {
     padding: 10px;
 }
 
@@ -45,6 +46,92 @@ ol, ul {
 }
 
 .cat {
-    width: 300px; 
+    width: 300px;
     height: 300px;
+}
+
+.header {
+    background-color: aqua;
+    padding: 15px;
+    text-align: right;
+    border: 1px solid grey;
+    border-radius: 10px;
+}
+
+.block-common {
+    width: 200px;
+    height: 200px;
+}
+
+.block {
+    width: 200px;
+    height: 200px;
+    background-color: bisque;
+    margin: 0 auto;
+}
+
+.container {
+    background-color: #4088e7;
+}
+
+.container-2 {
+    background-color: #4088e7;
+    height: 400px;
+    display: flex;
+    align-items: center;
+}
+
+.container-3 {
+    background-color: #4088e7;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.block-2 {
+    background-color: bisque;
+    margin: 0 auto;
+}
+
+.block-3 {
+    width: 200px;
+    height: 200px;
+    background-color: bisque;
+    margin: 10px;
+}
+
+.container-4 {
+    border: 1px solid black;
+}
+
+.red {
+    position: relative;
+    border: 2px solid red;
+    left: 20px;
+    top: 20px;
+}
+
+.green {
+    position: relative;
+    border: 2px solid green;
+    left: 150px;
+    top: -40px;
+}
+
+.blue {
+    position: relative;
+    border: 2px solid blue;
+    left: 280px;
+    top: -100px;
+}
+
+.abs-cat {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+}
+
+.abs-cat img {
+    width: 100px;
+    height: 100px;
 }
