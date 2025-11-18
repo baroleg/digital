@@ -13,71 +13,98 @@
         <a href="table.html">Таблица</a>
     </div>
 
-    <table>
-        <caption>Список студентов</caption>
-        <tr>
-            <th>id</th>
-            <th>ФИО</th>
-            <th>Номер зачетки</th>
-            <th>Номер группы</th>
-            <th>Пол</th>
-            <th>Возраст</th>
-            <th>Форма поступления</th>
-            <th>Название направления</th>
-        </tr>
+    <form>
+        <table>
+            <caption>Список студентов</caption>
+            <tr>
+                <th>id</th>
+                <th>ФИО</th>
+                <th>Номер зачетки</th>
+                <th>Номер группы</th>
+                <th>Пол</th>
+                <th>Возраст</th>
+                <th>Форма поступления</th>
+                <th>Название направления</th>
+            </tr>
 
-        <tr>
-            <td>1</td>
-            <td>Иванов Петр Сергеевич</td>
-            <td>000001</td>
-            <td>101</td>
-            <td>М</td>
-            <td>18</td>
-            <td>Очная</td>
-            <td>Направление 1</td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>Иванова Марина Михайловна</td>
-            <td>000002</td>
-            <td>101</td>
-            <td>Ж</td>
-            <td>19</td>
-            <td>Очная</td>
-            <td>Направление 1</td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>Петров Кузьма Михайлович</td>
-            <td>000003</td>
-            <td>102</td>
-            <td>М</td>
-            <td>17</td>
-            <td>Заочная</td>
-            <td>Направление 2</td>
-        </tr>
-        <tr>
-            <td>4</td>
-            <td>000004</td>
-            <td>Иванов Александр Алексеевич</td>
-            <td>102</td>
-            <td>М</td>
-            <td>18</td>
-            <td>Заочная</td>
-            <td>Направление 2</td>
-        </tr>
-        <tr>
-            <td>5</td>
-            <td>000005</td>
-            <td>Львов Иоан Васильевич</td>
-            <td>102</td>
-            <td>17</td>
-            <td>М</td>
-            <td>Заочная</td>
-            <td>Направление 2</td>
-        </tr>
+            <tr>
+                <td>1</td>
+                <td>Иванов Петр Сергеевич</td>
+                <td>000001</td>
+                <td>101</td>
+                <td>М</td>
+                <td>18</td>
+                <td>Очная</td>
+                <td>Направление 1</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Иванова Марина Михайловна</td>
+                <td>000002</td>
+                <td>101</td>
+                <td>Ж</td>
+                <td>19</td>
+                <td>Очная</td>
+                <td>Направление 1</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Петров Кузьма Михайлович</td>
+                <td>000003</td>
+                <td>102</td>
+                <td>М</td>
+                <td>17</td>
+                <td>Заочная</td>
+                <td>Направление 2</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>000004</td>
+                <td>Иванов Александр Алексеевич</td>
+                <td>102</td>
+                <td>М</td>
+                <td>18</td>
+                <td>Заочная</td>
+                <td>Направление 2</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>000005</td>
+                <td>Львов Иоан Васильевич</td>
+                <td>102</td>
+                <td>17</td>
+                <td>М</td>
+                <td>Заочная</td>
+                <td>Направление 2</td>
+            </tr>
 
-    </table>
+            <tr>
+                <td>
+                    <label for="id">id</label><input type="text" id="id" />
+                </td>
+                <td><label for="fio">ФИО</label><input id="fio" /></td>
+                <td><label for="nomer">Номер зачетки</label><input id="nomer" /></td>
+                <td><label for="group">Номер группы</label><input type="number" id="group" /></td>
+                <td><label for="gender">Пол</label>
+                    <select id="gender">
+                        <option value="male">М</option>
+                        <option value="female">Ж</option>
+                    </select>
+                </td>
+                <td><label for="age">Возраст</label><input type="number" id="age" /></td>
+                <td><label for="forma">Форма поступления</label>
+                    <select id="forma">
+                        <option value="ochnaya">Очная</option>
+                        <option value="zaochnaya">Заочная</option>
+                    </select>
+                </td>
+                <td><label for="namecourse">Название направления</label><input id="namecourse" /></td>
+            </tr>
+        </table>
+        <div class="align-right">
+            <input type="submit" value="Добавить" class="subm" />
+        </div>
+    </form>
 </body>
 
 </html>
