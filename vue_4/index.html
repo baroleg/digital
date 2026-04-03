@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Vue Бюджет - Учёт расходов</title>
+    <!-- Vue CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script> <!-- Подключение vue.js -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <div class="app-card">
+            <div class="budget-container">
+                <div class="header-title">📋 УЧЕТ РАСХОДОВ</div>
+
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <div class="stat-label">Баланс</div>
+                        <div class="stat-number" :class="balance >= 0 ? 'positive' : 'negative'">
+                            {{ formatCurrency(balance) }}
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Доходы</div>
+                        <div class="stat-number positive">
+                            {{ formatCurrency(totalIncome) }}
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Расходы</div>
+                        <div class="stat-number negative">
+                            {{ formatCurrency(totalExpense) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="history-section">
+                    <div class="history-header">
+                        <span>📜 История операций</span>
+                        <span style="font-size: 13px; font-weight: normal;">название / сумма</span>
+                    </div>
+                    
+                    <div v-if="history.length === 0" class="empty-message">
+                        💰 Вы не совершали финансовых операций
+                    </div>
+                    
+                    <ul v-else class="history-list">
+                        <li v-for="item in history" :key="item.id" class="history-item">
+                            <span class="item-name">{{ item.text }}</span>
+                            <span class="item-amount" :class="item.amount >= 0 ? 'income' : 'expense'">
+                                {{ formatSignedCurrency(item.amount) }}
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="add-form">
+                    <div class="form-row">
+                        <label>📌 Введите название</label>
+                        <input 
+                            type="text" 
+                            class="form-input" 
+                            v-model.trim="title" 
+                            placeholder="Например: Зарплата, Кафе, Ком. услуги..."
+                            @keyup.enter="addTransaction"
+                        >
+                    </div>
+                    <div class="form-row">
+                        <label>💰 Введите сумму</label>
+                        <input 
+                            type="number" 
+                            class="form-input" 
+                            v-model.number="amount" 
+                            placeholder="Сумма (положительная или отрицательная)"
+                            @keyup.enter="addTransaction"
+                        >
+                    </div>
+                    <button class="btn-add" @click="addTransaction">➕ Добавить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+		// Вызов Vue.js и создание приложения
+        new Vue({
+            el: '#app',
+			// Хранит реактивные данные компонента. При изменении этих данных Vue автоматически обновляет интерфейс.
+            data: {
+                // history: массив объектов { text, amount, id }
+                history: [],
+                title: '',      // связан с v-model.trim
+                amount: null    // связан с v-model.number
+            },
+			// Вычисляемые свойства – кэшируются и пересчитываются только когда зависящие от них данные меняются.
+            computed: {
+                // Общий баланс: сумма всех amount из history
+                balance() {
+                    if (this.history.length === 0) return 0;
+                    return this.history.reduce((sum, item) => sum + item.amount, 0);
+                },
+                // Сумма доходов (положительные amount)
+                totalIncome() {
+                    return this.history
+                        .filter(item => item.amount > 0)
+                        .reduce((sum, item) => sum + item.amount, 0);
+                },
+                // Сумма расходов (отрицательные amount, берём модуль для отображения)
+                totalExpense() {
+                    const expensesSum = this.history
+                        .filter(item => item.amount < 0)
+                        .reduce((sum, item) => sum + Math.abs(item.amount), 0);
+                    return expensesSum;
+                }
+            },
+			//Обычные методы – вызываются по событию.
+            methods: {
+                // Форматирование чисел 
+                formatCurrency(value) {
+                    if (value === undefined || value === null) return '0 ₽';
+                   
+                    const rounded = Math.abs(value).toFixed(2); // Пользователь видит только копейки
+                    const sign = value >= 0 ? '' : '-';
+                    return `${sign}${rounded} ₽`;
+                },
+                // Форматирование для списка: + / - и сумма 
+                formatSignedCurrency(amount) {
+                    const absValue = Math.abs(amount).toFixed(2);
+                    if (amount > 0) {
+                        return `+ ${absValue} ₽`;
+                    } else if (amount < 0) {
+                        return `- ${absValue} ₽`;
+                    }
+                    return `0 ₽`;
+                },
+                // Добавление нового элемента в массив history
+                addTransaction() {
+                    // 1. Валидация: название не должно быть пустым (после trim)
+                    if (this.title === "") {
+                        alert("Пожалуйста, введите название операции");
+                        return;
+                    }
+                    
+                    // 2. Проверка суммы: amount должен быть числом и не NaN
+                    //    из-за v-model.number, но если поле пустое, то amount станет null или undefined
+                    let numericAmount = this.amount;
+                    if (numericAmount === null || numericAmount === undefined || isNaN(numericAmount)) {
+                        alert("Пожалуйста, введите корректную сумму (число)");
+                        return;
+                    }
+                    
+                    // 3. Создаём объект новой операции: text, amount, id (уникальный)
+                    const newId = crypto.randomUUID();
+                    const newTransaction = {
+                        id: newId,
+                        text: this.title,
+                        amount: numericAmount
+                    };
+                    
+                    // 4. Добавляем в массив history 
+                    this.history.push(newTransaction);
+                    
+                    // 5. Очищаем поля формы
+                    this.title = "";
+                    this.amount = null;
+                    
+                }
+            },
+        });
+    </script>
+</body>
+</html>
